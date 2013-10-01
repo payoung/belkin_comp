@@ -21,7 +21,7 @@ bucket = conn.get_bucket('belkin-data')
 np_data_list = glob.glob('data/H*/Tagged_*.bin')
 
 # Save datasets to s3
-for data in training_data_list:
+for data in np_data_list:
     print "Saving %s" % data
     key = bucket.get_key(data)
     dataout = data.split('data/')[1]
