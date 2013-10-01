@@ -7,7 +7,7 @@ from math import *
 # Converts Tagged Training Data into numpy arrays
 def convertTrainingData(filepathin, filepathout):
 
-    taggingData = io.loadmat(filepath, struct_as_record=False, squeeze_me=True)
+    taggingData = io.loadmat(filepathin, struct_as_record=False, squeeze_me=True)
 
     # Extract tables
     buf = taggingData['Buffer']
