@@ -23,6 +23,6 @@ np_data_list = glob.glob('data/H*/Tagged_*.bin')
 # Save datasets to s3
 for data in np_data_list:
     print "Saving %s" % data
-    key = bucket.get_key(data)
     dataout = data.split('data/')[1]
+    key = bucket.new_key(data)
     key.set_contents_from_filename(dataout)
