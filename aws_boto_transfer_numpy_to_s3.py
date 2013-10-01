@@ -24,5 +24,5 @@ np_data_list = glob.glob('data/H*/Tagged_*.bin')
 for data in np_data_list:
     print "Saving %s" % data
     dataout = data.split('data/')[1]
-    key = bucket.new_key(data)
-    key.set_contents_from_filename(dataout)
+    key = bucket.new_key(dataout)
+    key.set_contents_from_filename(data)
