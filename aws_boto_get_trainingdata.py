@@ -1,5 +1,7 @@
 import boto
 import boto.s3.connection
+# credentials.py should contain the access_key and secret_key which are needed for 
+# the boto S3 connection
 import credentials as cr
 
 # Connect to S3
