@@ -6,15 +6,17 @@ def create_df(filepath):
     
     f = file(filepath, "rb")
 
-    df = pd.DataFrame()
+    d = {}
 
-    df['L1_Real'] = np.load(f)
-    df['L1_Imag'] = np.load(f)
-    df['L1_App'] = np.load(f)
-    df['L1_Pf'] = np.load(f)
-    df['L2_Real'] = np.load(f)
-    df['L2_Imag'] = np.load(f)
-    df['L2_App'] = np.load(f)
-    df['L2_Pf'] = np.load(f)
+    d['L1_Real'] = np.load(f)
+    d['L1_Imag'] = np.load(f)
+    d['L1_App'] = np.load(f)
+    d['L1_Pf'] = np.load(f)
+    d['L2_Real'] = np.load(f)
+    d['L2_Imag'] = np.load(f)
+    d['L2_App'] = np.load(f)
+    d['L2_Pf'] = np.load(f)
+
+    df = pd.DataFrame(d)
 
     return df
