@@ -43,10 +43,13 @@ def convertTrainingData(filepathin, filepathout):
     L2_Pf = np.array(L2_Pf,dtype='float64')
 
     f = file(filepathout, "wb")
+    np.save(f, taggingInfo)
+    np.save(f, L1_TimeTicks)
     np.save(f, L1_Real)
     np.save(f, L1_Imag)
     np.save(f, L1_App)
     np.save(f, L1_Pf)
+    np.save(f, L2_TimeTicks)
     np.save(f, L2_Real)
     np.save(f, L2_Imag)
     np.save(f, L2_App)
