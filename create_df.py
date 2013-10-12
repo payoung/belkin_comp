@@ -24,6 +24,6 @@ def create_df(filepath):
     d2['L2_Pf'] = np.load(f)
 
     df1 = pd.DataFrame(d1)
-    df2 = pd.dataFrame(d2)
+    df2 = pd.DataFrame(d2)
 
     return taggingInfo, df1, df2
