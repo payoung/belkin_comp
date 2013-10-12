@@ -6,17 +6,24 @@ def create_df(filepath):
     
     f = file(filepath, "rb")
 
-    d = {}
+    d1 = {}
+    d2 = {}
 
-    d['L1_Real'] = np.load(f)
-    d['L1_Imag'] = np.load(f)
-    d['L1_App'] = np.load(f)
-    d['L1_Pf'] = np.load(f)
-    d['L2_Real'] = np.load(f)
-    d['L2_Imag'] = np.load(f)
-    d['L2_App'] = np.load(f)
-    d['L2_Pf'] = np.load(f)
+    taggingInfo = np.load(f)
 
-    df = pd.DataFrame(d)
+    d1['L1_TimeTicks'] = np.load(f)
+    d1['L1_Real'] = np.load(f)
+    d1['L1_Imag'] = np.load(f)
+    d1['L1_App'] = np.load(f)
+    d1['L1_Pf'] = np.load(f)
 
-    return df
+    d2['L2_TimeTicks'] = np.load(f)
+    d2['L2_Real'] = np.load(f)
+    d2['L2_Imag'] = np.load(f)
+    d2['L2_App'] = np.load(f)
+    d2['L2_Pf'] = np.load(f)
+
+    df1 = pd.DataFrame(d1)
+    df2 = pd.dataFrame(d2)
+
+    return taggingInfo, df1, df2
