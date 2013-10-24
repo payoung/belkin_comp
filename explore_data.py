@@ -3,7 +3,6 @@ import create_data_dict as cdf
 from scipy import linspace, io
 from pylab import *
 
-
 f_list = glob.glob('data/H*/Tagged_*.bin')
 
 f1 = f_list[0]
@@ -11,16 +10,12 @@ f1 = f_list[0]
 taggingInfo, df1, df2 = cdf.create_data_dict(f1)
 
 
-def add_devices(ax,taggingInfo,timeticks,bottom=300,step=300):
-    """
-    Add a green line for every device.
-    First device will be at y=bottom, second at y=bottom+step etc
-    Device names will be displayed on the left
-    """
+def plot_devices(p, taggingInfo, df):
+    top = max(df)
+    bottom = min(df)
     for i in range(len(taggingInfo)):
-        ax.plot([taggingInfo[i,2],taggingInfo[i,3]], [i*step+bottom,i*step+bottom], color=(0,1,0,0.5), linewidth=10)
-        str1 = '%s' % taggingInfo[i,1]
-        ax.text(timeticks[0],step*i+bottom, str1)
+        p.plot([taggingInfo[i,2], taggingInfo[i,2]], [bottom, top],  c='g')
+        p.plot([taggingInfo[i,3], taggingInfo[i,3]], [bottom, top], c='r')
 
 
 #Plot L1_Real and L2_Real
@@ -28,27 +23,68 @@ def add_devices(ax,taggingInfo,timeticks,bottom=300,step=300):
 print type(taggingInfo)
 print taggingInfo
 print len(taggingInfo)
+print len(df1['L1_TimeTicks'])
+print len(df2['L2_TimeTicks'])
+
+
+def get_tagging_max_min(taggingInfo):
+    tags = []
+    for i in range(len(taggingInfo)):
+        tags.append(taggingInfo[i, 2])
+        tags.append(taggingInfo[i, 3])
+    return max(tags), min(tags)
+
+
+mx1, mn1 = get_tagging_max_min(taggingInfo)
+
+
+def get_time_tick_index(timetick, mx, mn):
+    lag_tick = 0
+    for i, tick in enumerate(timetick):
+        if tick > mx and lag_tick <= mx:
+            idx_stop = i
+        elif tick > mn and lag_tick <= mn:
+            idx_start = i
+        lag_tick = tick
+    return idx_start, idx_stop    
+
+
+idx_start, idx_stop = get_time_tick_index(df1['L1_TimeTicks'], mx1, mn1)
+
+print mn1, mx1
+print idx_start, idx_stop
+#print df1['L1_TimeTicks'][idx_start], df1['L1_TimeTicks'][idx_stop]
+
+subset = np.array(xrange(213000,216000))
+#subset = np.array( xrange(300000,360000))
+
+print df1['L1_TimeTicks'][300000], df1['L1_TimeTicks'][360000]
 
 fig1 = figure(1)
 ax1 = fig1.add_subplot(411)
-ax1.plot(df1['L1_TimeTicks'], df1['L1_Real'])
+ax1.plot(df1['L1_TimeTicks'][subset], df1['L1_Real'][subset])
+plot_devices(ax1, taggingInfo, df1['L1_Real'][subset])
 
 ax2 = fig1.add_subplot(412)
-ax2.plot(df1['L1_TimeTicks'], df1['L1_Imag'])
+ax2.plot(df1['L1_TimeTicks'][subset], df1['L1_Imag'][subset], c='r')
+plot_devices(ax2, taggingInfo, df1['L1_Imag'][subset])
 
 ax3 = fig1.add_subplot(413)
-ax3.plot(df1['L1_TimeTicks'], df1['L1_Pf'])
+ax3.plot(df1['L1_TimeTicks'][subset], df1['L1_Pf'][subset], c='g')
+plot_devices(ax3, taggingInfo, df1['L1_Pf'][subset])
 
+
+"""
 fig2 = figure(2)
 ax4 = fig2.add_subplot(411)
 ax4.plot(df2['L2_TimeTicks'], df2['L2_Real'])
 
 ax5 = fig2.add_subplot(412)
-ax5.plot(df2['L2_TimeTicks'], df2['L2_Imag'])
+ax5.plot(df2['L2_TimeTicks'], df2['L2_Imag'], c='r')
 
 ax6 = fig2.add_subplot(413)
-ax6.plot(df2['L2_TimeTicks'], df2['L2_Pf'])
-
+ax6.plot(df2['L2_TimeTicks'], df2['L2_Pf'], c='g')
+"""
 show()
 
 """
